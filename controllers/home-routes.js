@@ -6,10 +6,26 @@ const withAuth = require("../utils/auth");
 router.get("/", async (req, res) => {
   try {
     const postData = await Post.findAll({
+      attributes: ["id", "post_text", "title", "created_at"],
+      order: [["created_at", "DESC"]],
       include: [
         {
           model: User,
           attributes: ["username"],
+        },
+        {
+          model: Comment,
+          attributes: [
+            "id",
+            "comment_text",
+            "post_id",
+            "user_id",
+            "created_at",
+          ],
+          include: {
+            model: User,
+            attributes: ["username"],
+          },
         },
       ],
     });
@@ -18,7 +34,7 @@ router.get("/", async (req, res) => {
 
     res.render("homepage", {
       posts,
-      logged_in: req.session.logged_in,
+      logged_in: true,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -29,83 +45,74 @@ router.get("/", async (req, res) => {
 router.get("/post/:id", async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id, {
+      attributes: ["id", "post_text", "title", "created_at"],
       include: [
         {
-          model: User,
-          attributes: ["username"],
+          model: Comment,
+          attributes: [
+            "id",
+            "comment_text",
+            "post_id",
+            "user_id",
+            "created_at",
+          ],
+          include: {
+            model: User,
+            attributes: ["username"],
+          },
         },
       ],
     });
+    if (!postData) {
+      res.status(404).json({ message: "No post found with this id" });
+      return;
+    }
     const post = postData.get({ plain: true });
-    res.render("post", {
-      ...post,
-      logged_in: req.session.logged_in,
+    res.render("single-post", {
+      post,
+      loggedIn: true,
     });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-
-//  this is the route to get new post
-router.get("/new", async (req, res) => {
+// get all posts for dashboard
+router.get("/dashboard", withAuth, async (req, res) => {
   try {
     const postData = await Post.findAll({
+      where: {
+        user_id: req.session.user_id,
+      },
+      attributes: ["id", "post_text", "title", "created_at"],
       include: [
         {
           model: User,
-
           attributes: ["username"],
         },
-      ],
-    });
-    const posts = postData.map((post) => post.get({ plain: true }));
-    res.render("add-post", {
-      posts,
-      logged_in: req.session.logged_in,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// this  gets  one post to edit   
-router.get("/post/:id", async (req, res) => {
-  try {
-    const postData = await User.findByPk(req.params.id, {
-      include: [
         {
-          model: User,
-          attributes: ["name"],
+          model: Comment,
+
+          attributes: [
+            "id",
+            "comment_text",
+            "post_id",
+            "user_id",
+            "created_at",
+          ],
+          include: {
+            model: User,
+            attributes: ["username"],
+          },
         },
       ],
     });
 
-    const post = postData.get({ plain: true });
+    const posts = postData.map((post) => post.get({ plain: true }));
 
-    res.render("post", {
-      ...post,
+    res.render("dashboard", {
+      posts,
       logged_in: req.session.logged_in,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// Use withAuth middleware to prevent access to route
-router.get("/profile", withAuth, async (req, res) => {
-  try {
-    // Find the logged in user based on the session ID
-    const userData = await User.findByPk(req.session.user_id, {
-      attributes: { exclude: ["password"] },
-      include: [{ model: user }],
-    });
-
-    const user = userData.get({ plain: true });
-
-    res.render("profile", {
-      ...user,
-      logged_in: true,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -128,10 +135,6 @@ router.get("/signup", (req, res) => {
   }
 
   res.render("signup");
-});
-
-router.get("*", (req, res) => {
-  res.status(404).send("Can't go there!");
 });
 
 module.exports = router;

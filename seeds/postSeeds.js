@@ -27,15 +27,6 @@ const postData = [
   },
 ];
 
-const seedDatabase = async () => {
-  await sequelize.sync({ force: true });
+const seedGallery = () => Post.bulkCreate(postData);
 
-  await Post.bulkCreate(postData, {
-    individualHooks: true,
-    returning: true,
-  });
-
-  process.exit(0);
-};
-
-seedDatabase();
+module.exports = seedGallery;

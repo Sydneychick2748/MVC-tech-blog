@@ -19,19 +19,13 @@ const commentData = [
   },
 ];
 
+const seedGallery = () => Comment.bulkCreate(commentData);
+
+module.exports = seedGallery;
 
 // const userData = require('./userData.json');
 
-const seedDatabase = async () => {
-  await sequelize.sync({ force: true });
 
-  await Comment.bulkCreate(commentData, {
-    individualHooks: true,
-    returning: true,
-  });
 
-  process.exit(0);
-};
 
-seedDatabase();
 
