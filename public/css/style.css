@@ -1,11 +1,11 @@
-* {
+/* * {
     box-sizing: border-box;
 }
 
 body,
 html {
     height: 100%;
-    width: 100%;
+    width:100% ;
     padding: 0;
     margin: 0;
     font-family: sans-serif;
@@ -256,7 +256,7 @@ main {
 
 .new-post-section {
     display: flex;
-    justify-content: center;
+justify-content: center; 
 }
 
 #create-new-post {
@@ -285,4 +285,4 @@ main {
 .btn,
 #post-title {
     width: 100%;
-}
+} */

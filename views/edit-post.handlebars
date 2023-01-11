@@ -30,6 +30,18 @@
   </div>
 </form>
 
-{{> comments post.comments}}
+{{log comments}}
+<div class="comments">
+    {{#each comments }}
+    <section class="comment">
+        <div class="meta">
+            {{this.user}} on {{this.posted_at}}
+        </div>
+        <div class="text">
+            {{this.post_text}}
+        </div>
+    </section>
+    {{/each}}
+</div> 
 
 <script src="/javascript/edit.js"></script>

@@ -15,6 +15,22 @@
         <a href="/dashboard" class="go-back"> &larr; Back to dashboard</a>
 {{log posts}}
 
+{{!-- {{log comments}}
+<div class="comments">
+    {{#each comment_text}}
+    <section class="comment">
+        <div class="meta">
+            {{this.user_id}} on {{this.post_id}}
+        </div>
+        <div class="text">
+            {{this.post_text}}
+        </div>
+    </section>
+    {{/each}}
+</div> --}}
+
+
+
 {{#each posts }}
 <div class=" home-div">
     <h1 class="blog-title">{{this.title}}</h1>
@@ -27,7 +43,7 @@
 </div>
 {{/each}}
 
-    </div>
+
 </body>
 
 </html>
