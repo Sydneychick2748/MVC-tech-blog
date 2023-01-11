@@ -7,11 +7,11 @@ router.get("/", async (req, res) => {
   try {
     const postData = await Post.findAll({
       attributes: ["id", "post_text", "title", "created_at"],
-      order: [["created_at", "DESC"]],
+      
       include: [
         {
           model: User,
-          attributes: ["username"],
+          attributes: ["name"],
         },
         {
           model: Comment,
@@ -21,10 +21,11 @@ router.get("/", async (req, res) => {
             "post_id",
             "user_id",
             "created_at",
+           
           ],
           include: {
             model: User,
-            attributes: ["username"],
+            attributes: ["name"],
           },
         },
       ],
@@ -45,7 +46,7 @@ router.get("/", async (req, res) => {
 router.get("/post/:id", async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id, {
-      attributes: ["id", "post_text", "title", "created_at"],
+      attributes: ["id", "post_text", "title",  "created_at"],
       include: [
         {
           model: Comment,
@@ -55,10 +56,11 @@ router.get("/post/:id", async (req, res) => {
             "post_id",
             "user_id",
             "created_at",
+           
           ],
           include: {
             model: User,
-            attributes: ["username"],
+            attributes: ["name"],
           },
         },
       ],
@@ -84,11 +86,11 @@ router.get("/dashboard", withAuth, async (req, res) => {
       where: {
         user_id: req.session.user_id,
       },
-      attributes: ["id", "post_text", "title", "created_at"],
+      attributes: ["id", "post_text", "title"],
       include: [
         {
           model: User,
-          attributes: ["username"],
+          attributes: ["name"],
         },
         {
           model: Comment,
@@ -99,10 +101,11 @@ router.get("/dashboard", withAuth, async (req, res) => {
             "post_id",
             "user_id",
             "created_at",
+          
           ],
           include: {
             model: User,
-            attributes: ["username"],
+            attributes: ["name"],
           },
         },
       ],
@@ -118,7 +121,7 @@ router.get("/dashboard", withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
-
+//  
 router.get("/login", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/");
@@ -127,7 +130,7 @@ router.get("/login", (req, res) => {
 
   res.render("login");
 });
-
+// get all posts for homepage
 router.get("/signup", (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/");
