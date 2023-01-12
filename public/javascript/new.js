@@ -1,38 +1,29 @@
-async function newFormHandler(event) {
-    event.preventDefault();
+const newFormHandler = async (event) => {
+  // Stop the browser from submitting the form so we can do so with JavaScript
+  event.preventDefault();
 
-    const title = document.querySelector('input[name="post-title"]').value;
-    const post_text = document.querySelector('textarea[name="post-text"]').value;
+  // Gather the data from the form elements on the page
+  const title = document.querySelector('input[name="post-title"]').value.trim();
+  const content = document.querySelector('textarea[name="post-body"]').value.trim();
+  const token = localStorage.getItem('token');
 
-    const response = await fetch(`/api/posts`, {
-      method: 'POST',
-      body: JSON.stringify({
-        title,
-        post_text
-      }),
-      headers: {
-        'Content-Type': 'application/json'
+
+  if (content) {
+      const response = await fetch('/api/post', {
+          method: 'POST',
+          body: JSON.stringify({ title, description: content }),
+          headers: { 'Content-Type': 'application/json', authorization: `Bearer ${token}` },
+      });
+      if (response.ok) {
+          document.location.replace("/dashboard");
+      } else {
+          alert('Failed to log in');
       }
-    });
-
-    if (response.ok) {
-      document.location.replace('/dashboard');
-    } else {
-      alert(response.statusText);
-    }
   }
-  
-  document.querySelector('.new-post-form').addEventListener('submit', newFormHandler);
+};
 
-
-
-
-// create a new post 
-  async function createPostHandler(event) {
-    event.preventDefault();
-
-    document.location.replace('/dashboard/new')
-}
-
+document
+  .querySelector('#new-post-form')
+  .addEventListener('submit', newFormHandler);
 
 document.querySelector('#create-new-post').addEventListener('click', createPostHandler);
