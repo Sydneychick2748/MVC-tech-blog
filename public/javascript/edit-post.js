@@ -7,11 +7,12 @@ const editFormHandler = async (event) => {
     const postID = document.getElementById('post-id').value.trim();
 
     if (postID) {
-        const response = await fetch('/api/post', {
-            method: 'put',
+        console.log(titlePost, "++++++++")
+        const response = await fetch(`/api/post/${postID}`, {
+            method: 'PUT',
             body: JSON.stringify({
-                title: titlePost.value,
-                body: bodyPost.value
+                title: titlePost,
+                body: bodyPost
             }),
             headers: {'Content-Type': 'application/json'}
         });
@@ -19,7 +20,7 @@ const editFormHandler = async (event) => {
         if (response.ok) {
             document.location.replace('/dashboard');
         } else {
-            alert('Failed to log in');
+            alert('Failed to update');
         }
     }
 };
