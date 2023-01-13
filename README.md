@@ -83,8 +83,7 @@ First clone the repository then run the following commands to install dependency
  Run the following command to begin the app:
 
 node server.js
- To see the project  you can view it on heroku deplored site : https://sandy-paths.herokuapp.com/
-
+ To see the project  you can view it on heroku deplored site : https://dashboard.heroku.com/apps/thawing-gorge-64914
 
 
 
