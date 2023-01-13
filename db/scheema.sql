@@ -1,8 +1,4 @@
--- -- DROP DATABASE
--- DROP DATABASE IF EXISTS mvc_tech_db;
 
--- -- CREATE DATABASE
--- CREATE DATABASE mvc_tech_db;
 
-DROP DATABASE IF EXISTS MVC_techblog_db
-CREATE DATABASE MVC_techblog_db
+DROP DATABASE IF EXISTS MVC_techblog_db;
+CREATE DATABASE MVC_techblog_db;
