@@ -5,8 +5,9 @@ const deletePostHandler = async (event) => {
     const postID = document.getElementById('post-id').value.trim();
 
     if (postID) {
-        const response = await fetch('/api/post', {
-            method: 'delete',
+        
+        const response = await fetch(`/api/post${postID}`, {
+            method: 'DELETE',
         });
         if (response.ok) {
             document.location.replace('/dashboard');

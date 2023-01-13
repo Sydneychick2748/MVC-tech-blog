@@ -10,6 +10,7 @@ html {
     margin: 0;
     font-family: sans-serif;
     color: rgb(46, 36, 36);
+    background-color: beige;
 }
 
 main,
@@ -306,4 +307,18 @@ justify-content: center;
 .btn,
 #post-title {
     width: 100%;
+}
+post.list-groups{
+    display: flex;
+    justify-content: space-between;
+}
+/* .posts{
+    display: flex;
+    justify-content: space-between;
+} */
+a.list-item{
+    display: flex;
+    justify-content:space-between ;
+    
+    
 }
