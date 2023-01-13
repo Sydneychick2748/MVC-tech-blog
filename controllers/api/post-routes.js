@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
 router.put("/:id", withAuth, (req, res) => {
   Post.update({
           title: req.body.title,
-          description: req.body.post_content,
+          description: req.body.body,
           
 
       }, {
