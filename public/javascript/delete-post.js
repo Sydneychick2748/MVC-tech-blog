@@ -6,7 +6,7 @@ const deletePostHandler = async (event) => {
 
     if (postID) {
         
-        const response = await fetch(`/api/post${postID}`, {
+        const response = await fetch(`/api/post/${postID}`, {
             method: 'DELETE',
         });
         if (response.ok) {
