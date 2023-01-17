@@ -31,15 +31,17 @@ router.get("/post/:id", async (req, res) => {
       include: [
         {
           model: User,
-
-          model: Comment,
         },
+        {
+          model: Comment,
+
+        }
       ],
     });
-
+    console.log;
     const post = blogData.get({ plain: true });
 
-    console.log(post);
+    console.log("POST LOG", post);
 
     res.render("single-post", {
       ...post,
