@@ -88,7 +88,7 @@ router.get("/signup", (req, res) => {
     return;
   }
   console.log("hit line 90");
-  res.render("frank");
+  res.render("signUp");
 });
 
 module.exports = router;
