@@ -83,12 +83,12 @@ router.get("/signup", (req, res) => {
   console.log("HIT LINE 83");
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
-    console.log("you were logged in")
+    console.log("you were logged in");
     res.redirect("/profile");
     return;
   }
-  console.log("hit line 90")
-  res.render("signup");
+  console.log("hit line 90");
+  res.render("frank");
 });
 
 module.exports = router;
