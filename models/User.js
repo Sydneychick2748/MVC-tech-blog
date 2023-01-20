@@ -4,7 +4,7 @@ const sequelize = require('../config/connection');
 
 //create User Model
 class User extends Model {
-//set method to run instant data per user to check password
+
   checkPassword(loginPw) {
     return bcrypt.compareSync(loginPw, this.password);
   }
